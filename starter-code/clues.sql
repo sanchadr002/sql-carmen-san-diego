@@ -20,19 +20,20 @@ SELECT name FROM countries WHERE code = (SELECT countrycode from countrylanguage
  -- There are only two cities she could be flying to in the country. One is named the same as the country – that
  -- would be too obvious. We're following our gut on this one; find out what other city in that country she might
  --  be flying to.
-
+SELECT name FROM cities WHERE countrycode = (SELECT countrycode FROM countrylanguages WHERE language = 'Italian' AND percentage = (SELECT MAX(percentage) FROM countrylanguages) AND name <> (SELECT name from countries WHERE code = (SELECT countrycode FROM countrylanguages WHERE language = 'Italian' AND percentage = (SELECT MAX(percentage) FROM countrylanguages))));
 
 
 -- Clue #5: Oh no, she pulled a switch – there are two cities with very similar names, but in totally different
 -- parts of the globe! She's headed to South America as we speak; go find a city whose name is like the one we were
 -- headed to, but doesn't end the same. Find out the city, and do another search for what country it's in. Hurry!
-
+SELECT name, countrycode FROM cities WHERE name LIKE 'Serra%';
+SELECT name FROM countries WHERE code = 'BRA';
 
 
 -- Clue #6: We're close! Our South American agent says she just got a taxi at the airport, and is headed towards
  -- the capital! Look up the country's capital, and get there pronto! Send us the name of where you're headed and we'll
  -- follow right behind you!
-
+SELECT name FROM cities WHERE id = (SELECT capital FROM countries WHERE name = 'Brazil');
 
 
 -- Clue #7: She knows we're on to her – her taxi dropped her off at the international airport, and she beat us to
@@ -50,7 +51,8 @@ SELECT name FROM countries WHERE code = (SELECT countrycode from countrylanguage
 
 
 -- We're counting on you, gumshoe. Find out where she's headed, send us the info, and we'll be sure to meet her at the gates with bells on.
-
+SELECT name FROM cities WHERE population = '91084';
 
 
 -- She's in ____________________________!
+Santa Monica
